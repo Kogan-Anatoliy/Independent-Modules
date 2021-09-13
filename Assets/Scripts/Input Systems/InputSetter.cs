@@ -44,9 +44,8 @@ namespace DemoProject.CustomInput
             }
         }
 
-        private void SwitchInputController()
+        public void SwitchInputController()
         {
-            Debug.Log("dfgh");
             playerController.inputController.enabled = false;
             for (int i = 0; i < _inputControllers.Length; i++)
             {
