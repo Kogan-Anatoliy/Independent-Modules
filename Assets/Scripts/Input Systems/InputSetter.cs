@@ -10,10 +10,10 @@ namespace DemoProject.CustomInput
 {
     public class InputSetter : MonoBehaviour
     {
+        public KeyCode switchInputButton = KeyCode.None;
         public PlayerController playerController = null;
 
-        public Button switchButton = null;
-        public Text buttonText = null;
+        public Text currentInputText = null;
 
         private InputController[] _inputControllers = new InputController[0];
 
@@ -33,14 +33,21 @@ namespace DemoProject.CustomInput
             if (_inputControllers.Length > 0)
             {
                 playerController.inputController = _inputControllers[0];
-                buttonText.text = playerController.inputController.GetType().ToString();
+                currentInputText.text = $"{playerController.inputController.GetType()} or press: {switchInputButton}";
 
                 playerController.inputController.enabled = true;
-                switchButton.onClick.AddListener(SwitchInputController);
             }
             else
             {
-                buttonText.text = "None";
+                currentInputText.text = "None";
+            }
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(switchInputButton))
+            {
+                SwitchInputController();
             }
         }
 
@@ -54,7 +61,7 @@ namespace DemoProject.CustomInput
                     //return next array element:
                     playerController.inputController = (i + 1 < _inputControllers.Length ? _inputControllers[i + 1] : _inputControllers[0]);
 
-                    buttonText.text = playerController.inputController.GetType().ToString();
+                    currentInputText.text = $"{playerController.inputController.GetType()} or press: {switchInputButton}";
                     break;
                 }
             }
